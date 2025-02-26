@@ -1,0 +1,6 @@
+<h1>Список контента</h1>
+<ul>
+  <% @contents.each do |content| %>
+    <li><a href="<%= content_path(content) %>"><%= content.title %></a></li>
+  <% end %>
+</ul>
