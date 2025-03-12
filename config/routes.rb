@@ -1,24 +1,22 @@
 Rails.application.routes.draw do
-  # Главная страница
   root "pages#home"
 
-  # Ресурсы для контента
   resources :contents do
-    resources :comments, only: [:create, :index] # Вложенные маршруты для комментариев
-    resources :likes, only: [:create, :destroy]  # Вложенные маршруты для лайков
+    resources :comments, only: [:create, :index]
+    resources :likes, only: [:create, :destroy]
   end
 
-  # Отдельные ресурсы
   resources :categories
   resources :tags
   resources :notifications, only: [:index, :update]
   resources :analytics, only: [:index]
 
-  # Ресурсы пользователей
-  resources :users, only: [:create, :show]
-  resources :moderators, only: [:create, :index]
+  resources :users, only: [:create, :show, :index] do
+    member do
+      patch "promote"
+    end
+  end
 
-  # API-пространство имён
   namespace :api do
     resources :contents, only: [:index, :show]
   end
